@@ -9,43 +9,37 @@ function HeroFather(name){
 		return this
 	}
 	//关键步骤，将next方法通过回调置于队列末尾
-	var that=this
-	setTimeout(function(){
-		console.log(`Hi, my name is ${that.name}`)
-		that.next()
+	setTimeout(() => {
+		console.log(`Hi, my name is ${this.name}`)
+		this.next()
 	})
 }
 
 HeroFather.prototype.sleep=function(a){
-	var that=this
-	var fn = function(){
+	var fn = () => {
 		var s = a
 		console.log(`I need sleep ${s}s`)
-		setTimeout(function(){
-			that.next()
-		},s*1000)
+		setTimeout(this.next.bind(this), s*1000)
 	}
 	this.task.push(fn)
 	return this
 }
 
-HeroFather.prototype.kill=function(a){
-	var that = this
-	var fn = function(){
+HeroFather.prototype.kill = function(a){
+	var fn = () => {
 		var s = a
-		console.log(`I killed ${s} bug${s>1?'s':''}`);
-		that.next()
+		console.log(`I killed ${s} bug${s>1?'s':''}`)
+		this.next()
 	}
 	this.task.push(fn)
 	return this
 }
 
 HeroFather.prototype.recover=function(a){
-	var that = this
-	var fn = function(){
+	var fn = () => {
 		var s = a
-		console.log(`I recovered ${s} HP`);
-		that.next()
+		console.log(`I recovered ${s} HP`)
+		this.next()
 	}
 	this.task.push(fn)
 	return this
